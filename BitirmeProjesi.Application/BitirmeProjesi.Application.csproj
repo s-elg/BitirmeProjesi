@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BitirmeProjesi.Core\BitirmeProjesi.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Features\Advisors\GetAdvisorStudents\" />
+    <Folder Include="Features\Advisors\GetStudentExamParticipationHistory\" />
+    <Folder Include="Features\Advisors\ReviewExcuse\" />
+    <Folder Include="Features\Exams\GetExamDetail\" />
+  </ItemGroup>
+
+</Project>
