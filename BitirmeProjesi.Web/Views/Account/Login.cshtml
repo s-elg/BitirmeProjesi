@@ -1,5 +1,85 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model BitirmeProjesi.Web.Models.Account.LoginViewModel
 @{
+    ViewData["Title"] = "Giriş Yap";
+    Layout = null;
+}
+
+<link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
+
+<div class="login-shell">
+    <div class="login-card">
+        <h1 class="login-title">Sisteme Hoş Geldiniz</h1>
+        <p class="login-subtitle">Devam etmek için lütfen rolünüzü seçin ve giriş yapın.</p>
+
+        <form asp-action="Login" asp-controller="Account" method="post" class="login-form" novalidate>
+            @Html.AntiForgeryToken()
+
+            <div class="form-block">
+                <label class="form-label">Rolünüzü seçin</label>
+
+                <div class="role-grid" role="radiogroup" aria-label="Rol seçimi">
+                    <button type="button"
+                            class="role-card @(Model.Role == "Student" ? "active" : "")"
+                            data-role="Student">
+                        <div class="role-icon">🎓</div>
+                        <div class="role-text">Öğrenci</div>
+                    </button>
+
+                    <button type="button"
+                            class="role-card @(Model.Role == "Advisor" ? "active" : "")"
+                            data-role="Advisor">
+                        <div class="role-icon">👥</div>
+                        <div class="role-text">Danışman</div>
+                    </button>
+                </div>
+
+                <input type="hidden" asp-for="Role" id="roleInput" />
+                <span class="field-error">@Html.ValidationMessageFor(m => m.Role)</span>
+            </div>
+
+            <div class="form-block">
+                <label class="form-label" for="username">Kullanıcı Adı</label>
+                <input asp-for="Username" id="username" class="form-input" placeholder="Kullanıcı adınızı girin" />
+                <span class="field-error">@Html.ValidationMessageFor(m => m.Username)</span>
+            </div>
+
+            <div class="form-block">
+                <label class="form-label" for="password">Parola</label>
+                <input asp-for="Password" id="password" class="form-input" placeholder="Parolanızı girin" />
+                <span class="field-error">@Html.ValidationMessageFor(m => m.Password)</span>
+            </div>
+
+            <div class="form-row">
+                <label class="checkbox">
+                    <input asp-for="RememberMe" />
+                    <span>Beni hatırla</span>
+                </label>
+
+                <a class="forgot-link" asp-action="ResetPassword" asp-controller="Account">Parolanızı mı unuttunuz?</a>
+            </div>
+
+            <button type="submit" class="primary-btn">Giriş Yap</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    (function () {
+        const roleInput = document.getElementById('roleInput');
+        const cards = document.querySelectorAll('.role-card');
+
+        cards.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const role = btn.getAttribute('data-role');
+                roleInput.value = role;
+
+                cards.forEach(x => x.classList.remove('active'));
+                btn.classList.add('active');
+            });
+        });
+    })();
+</script>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
 }
